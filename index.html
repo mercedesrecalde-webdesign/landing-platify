@@ -5,13 +5,819 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="PLATIFY - La app profesional de costeo gastronómico con IA. Calcula costos de recetas en segundos, genera menús automáticamente y aumenta tu rentabilidad.">
-    <meta name="keywords" content="costeo gastronomico, recetas, costos, restaurante, chef, IA">
-    <title>PLATIFY - Costeo Gastronómico Inteligente</title>
-    <link rel="stylesheet" href="styles.css">
+        content="PLATIFY - Plataforma profesional de costeo gastronómico y análisis nutricional para comedores escolares. Calcula costos por porción, factor de corrección y aporte nutricional en segundos.">
+    <meta name="keywords" content="costeo gastronomico, comedores escolares, nutricion, recetas, costos, ficha tecnica">
+    <title>PLATIFY — Costeo Gastronómico y Nutrición Inteligente</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #10B981;
+            --emerald-dark: #059669;
+            --emerald-light: #34D399;
+            --teal: #14B8A6;
+            --ink: #0F2A24;
+            --ink-soft: #2D4A42;
+            --cream: #FBFAF6;
+            --sand: #F3F0E7;
+            --amber: #F59E0B;
+            --coral: #FB7185;
+            --sky: #38BDF8;
+            --violet: #8B5CF6;
+            --text: #1A332D;
+            --text-soft: #51635D;
+            --white: #FFFFFF;
+            --shadow-sm: 0 2px 8px rgba(15, 42, 36, 0.06);
+            --shadow-md: 0 10px 30px rgba(15, 42, 36, 0.10);
+            --shadow-lg: 0 24px 60px rgba(15, 42, 36, 0.16);
+            --shadow-emerald: 0 16px 40px rgba(16, 185, 129, 0.28);
+            --radius: 20px;
+            --radius-sm: 12px;
+            --maxw: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            line-height: 1.12;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        section {
+            position: relative;
+        }
+
+        /* ---------- Buttons ---------- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            border-radius: 999px;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            font-size: 0.98rem;
+        }
+
+        .btn svg { transition: transform 0.2s ease; }
+        .btn:hover svg { transform: translateX(3px); }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--teal) 100%);
+            color: white;
+            padding: 0.8rem 1.6rem;
+            box-shadow: var(--shadow-emerald);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 48px rgba(16, 185, 129, 0.38);
+        }
+
+        .btn-large {
+            padding: 1.05rem 2.1rem;
+            font-size: 1.08rem;
+        }
+
+        .btn-secondary {
+            background: var(--white);
+            color: var(--ink);
+            padding: 1.05rem 2.1rem;
+            box-shadow: var(--shadow-sm);
+            border: 1.5px solid var(--sand);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--emerald-light);
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--emerald-dark);
+            padding: 1.05rem 2.2rem;
+            font-size: 1.08rem;
+            box-shadow: 0 14px 36px rgba(0,0,0,0.18);
+        }
+
+        .btn-white:hover { transform: translateY(-2px); }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--emerald-dark);
+            padding: 0.85rem 1.6rem;
+            border: 1.5px solid var(--emerald);
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-outline:hover {
+            background: var(--emerald);
+            color: white;
+        }
+
+        /* ---------- Navbar ---------- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(251, 250, 246, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(15, 42, 36, 0.07);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--ink);
+        }
+
+        .logo-mark {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--teal) 100%);
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow-emerald);
+            flex-shrink: 0;
+        }
+
+        .logo-mark svg { width: 21px; height: 21px; }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links a:not(.btn) {
+            font-weight: 600;
+            color: var(--text-soft);
+            font-size: 0.96rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:not(.btn):hover { color: var(--emerald-dark); }
+
+        .nav-toggle { display: none; }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            padding: 5rem 0 5.5rem;
+            background:
+                radial-gradient(1200px 500px at 85% -5%, rgba(52, 211, 153, 0.18), transparent 60%),
+                radial-gradient(900px 500px at 5% 20%, rgba(56, 189, 248, 0.12), transparent 55%);
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: white;
+            color: var(--emerald-dark);
+            padding: 0.45rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .badge .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: var(--emerald);
+            box-shadow: 0 0 0 4px rgba(16,185,129,0.18);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.7rem);
+            margin-bottom: 1.3rem;
+        }
+
+        .hero h1 .accent {
+            background: linear-gradient(120deg, var(--emerald) 0%, var(--teal) 60%, var(--sky) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.18rem;
+            color: var(--text-soft);
+            margin-bottom: 2.1rem;
+            max-width: 33rem;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.8rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .stat-number {
+            font-family: 'Fraunces', serif;
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1;
+        }
+
+        .stat-number span { color: var(--emerald); }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-soft);
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+
+        /* ---------- Hero mockup ---------- */
+        .hero-visual {
+            position: relative;
+        }
+
+        .mock-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(15,42,36,0.05);
+        }
+
+        .mock-glow {
+            position: absolute;
+            inset: -30px -20px;
+            background: radial-gradient(circle at 70% 30%, rgba(16,185,129,0.35), transparent 65%);
+            filter: blur(40px);
+            z-index: 1;
+        }
+
+        .mock-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+
+        .mock-title {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--ink);
+        }
+
+        .mock-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--emerald-dark);
+            background: rgba(16,185,129,0.12);
+            padding: 0.3rem 0.7rem;
+            border-radius: 999px;
+        }
+
+        .mock-row {
+            display: grid;
+            grid-template-columns: 1.6fr 0.7fr 0.7fr 1fr;
+            gap: 0.5rem;
+            padding: 0.65rem 0.6rem;
+            font-size: 0.82rem;
+            align-items: center;
+            border-radius: 8px;
+        }
+
+        .mock-row.header {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--teal) 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .mock-row.alt { background: var(--sand); }
+        .mock-row .num { font-variant-numeric: tabular-nums; text-align: right; color: var(--text-soft); }
+        .mock-row .cost { font-weight: 700; color: var(--emerald-dark); text-align: right; }
+        .mock-row .name { font-weight: 600; }
+
+        .mock-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.1rem;
+            padding: 1rem 1.1rem;
+            background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(20,184,166,0.10));
+            border-radius: var(--radius-sm);
+            border: 1px dashed rgba(16,185,129,0.35);
+        }
+
+        .mock-total .label { font-size: 0.8rem; color: var(--text-soft); font-weight: 600; }
+        .mock-total .value { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 700; color: var(--emerald-dark); }
+
+        .float-chip {
+            position: absolute;
+            background: white;
+            border-radius: 14px;
+            box-shadow: var(--shadow-md);
+            padding: 0.7rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 3;
+            border: 1px solid rgba(15,42,36,0.05);
+        }
+
+        .float-chip .ic {
+            width: 30px; height: 30px; border-radius: 9px;
+            display: grid; place-items: center;
+            color: white;
+        }
+
+        .chip-1 { top: -18px; left: -22px; animation: floaty 5s ease-in-out infinite; }
+        .chip-1 .ic { background: linear-gradient(135deg, var(--amber), #FB923C); }
+        .chip-2 { bottom: 40px; right: -28px; animation: floaty 5s ease-in-out infinite 1.5s; }
+        .chip-2 .ic { background: linear-gradient(135deg, var(--violet), #A78BFA); }
+
+        @keyframes floaty {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ---------- Section headers ---------- */
+        .section-header {
+            text-align: center;
+            max-width: 40rem;
+            margin: 0 auto 3.2rem;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--emerald-dark);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(1.9rem, 4vw, 2.7rem);
+            margin-bottom: 0.9rem;
+        }
+
+        .section-header p {
+            font-size: 1.12rem;
+            color: var(--text-soft);
+        }
+
+        /* ---------- Features ---------- */
+        .features { padding: 5.5rem 0; }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem 1.8rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(15,42,36,0.05);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 15px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 1.2rem;
+            color: white;
+        }
+
+        .feature-icon svg { width: 26px; height: 26px; }
+
+        .fi-1 { background: linear-gradient(135deg, var(--emerald), var(--teal)); }
+        .fi-2 { background: linear-gradient(135deg, var(--amber), #FB923C); }
+        .fi-3 { background: linear-gradient(135deg, var(--sky), #0EA5E9); }
+        .fi-4 { background: linear-gradient(135deg, var(--violet), #A78BFA); }
+        .fi-5 { background: linear-gradient(135deg, var(--coral), #F43F5E); }
+        .fi-6 { background: linear-gradient(135deg, var(--teal), #0D9488); }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .feature-card p {
+            color: var(--text-soft);
+            font-size: 0.97rem;
+        }
+
+        /* ---------- How it works ---------- */
+        .how {
+            padding: 5.5rem 0;
+            background: linear-gradient(180deg, var(--sand) 0%, var(--cream) 100%);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.2rem;
+            counter-reset: step;
+        }
+
+        .step {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            border: 1px solid rgba(15,42,36,0.05);
+        }
+
+        .step-number {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--emerald), var(--teal));
+            color: white;
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 1.1rem;
+            box-shadow: var(--shadow-emerald);
+        }
+
+        .step h3 { font-size: 1.12rem; margin-bottom: 0.5rem; }
+        .step p { font-size: 0.92rem; color: var(--text-soft); }
+
+        /* ---------- Highlight band ---------- */
+        .highlight {
+            padding: 4.5rem 0;
+        }
+
+        .highlight-inner {
+            background: linear-gradient(135deg, var(--ink) 0%, #16453B 100%);
+            border-radius: 28px;
+            padding: 3.5rem 3rem;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .highlight-inner::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -10%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(16,185,129,0.3), transparent 70%);
+            filter: blur(30px);
+        }
+
+        .highlight-text { position: relative; z-index: 1; }
+        .highlight-text .eyebrow { color: var(--emerald-light); }
+        .highlight-text h2 { color: white; font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 1rem; }
+        .highlight-text p { color: rgba(255,255,255,0.78); font-size: 1.1rem; margin-bottom: 1.8rem; }
+
+        .highlight-points {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .hp {
+            display: flex;
+            align-items: center;
+            gap: 0.9rem;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1rem 1.2rem;
+            border-radius: 14px;
+            backdrop-filter: blur(6px);
+        }
+
+        .hp-ic {
+            width: 38px; height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--emerald), var(--teal));
+            display: grid; place-items: center;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .hp-text strong { display: block; color: white; font-size: 0.98rem; }
+        .hp-text span { color: rgba(255,255,255,0.65); font-size: 0.85rem; }
+
+        /* ---------- Roadmap ---------- */
+        .roadmap { padding: 5.5rem 0; }
+
+        .road-star {
+            position: relative;
+            border-radius: 26px;
+            padding: 3rem;
+            margin-bottom: 1.4rem;
+            background: linear-gradient(135deg, var(--ink) 0%, #16453B 60%, #0D9488 130%);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .road-star-glow {
+            position: absolute;
+            top: -40%; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 400px;
+            background: radial-gradient(circle, rgba(52,211,153,0.4), transparent 65%);
+            filter: blur(40px);
+        }
+
+        .road-star-content { position: relative; z-index: 1; max-width: 44rem; margin: 0 auto; }
+        .road-star-ic { font-size: 3rem; margin-bottom: 0.8rem; }
+        .road-star h3 { color: white; font-size: clamp(1.6rem, 3.5vw, 2.3rem); margin-bottom: 0.8rem; }
+        .road-star p { color: rgba(255,255,255,0.82); font-size: 1.1rem; }
+
+        .road-soon.star {
+            background: linear-gradient(135deg, var(--amber), #FB923C);
+            color: white;
+            position: static;
+            display: inline-block;
+            margin-bottom: 1.2rem;
+        }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.4rem;
+        }
+
+        .road-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 1.9rem;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(15,42,36,0.05);
+            position: relative;
+        }
+
+        .road-soon {
+            position: absolute;
+            top: 1.4rem; right: 1.4rem;
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--amber);
+            background: rgba(245, 158, 11, 0.12);
+            padding: 0.25rem 0.65rem;
+            border-radius: 999px;
+        }
+
+        .road-ic {
+            font-size: 1.8rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .road-card h3 { font-size: 1.15rem; margin-bottom: 0.5rem; }
+        .road-card p { color: var(--text-soft); font-size: 0.93rem; }
+
+        /* ---------- Developer ---------- */
+        .developer { padding: 4rem 0; }
+
+        .dev-inner {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 2.5rem;
+            align-items: center;
+            background: white;
+            border-radius: 26px;
+            padding: 2.8rem 3rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(15,42,36,0.05);
+        }
+
+        .dev-avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--teal) 100%);
+            display: grid;
+            place-items: center;
+            box-shadow: var(--shadow-emerald);
+            flex-shrink: 0;
+        }
+
+        .dev-avatar svg { width: 54px; height: 54px; }
+
+        .dev-text h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: 0.7rem; }
+        .dev-text p { color: var(--text-soft); font-size: 1.05rem; margin-bottom: 1.4rem; max-width: 42rem; }
+
+        .dev-links { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+        .dev-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--emerald-dark);
+            background: rgba(16,185,129,0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .dev-link:hover {
+            background: var(--emerald);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ---------- CTA ---------- */
+        .cta {
+            padding: 5rem 0;
+        }
+
+        .cta-inner {
+            background: linear-gradient(135deg, var(--emerald) 0%, var(--teal) 55%, var(--sky) 130%);
+            border-radius: 28px;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-emerald);
+        }
+
+        .cta-inner::before,
+        .cta-inner::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+        }
+        .cta-inner::before { width: 280px; height: 280px; top: -120px; left: -60px; }
+        .cta-inner::after { width: 200px; height: 200px; bottom: -100px; right: -40px; }
+
+        .cta-inner h2 { color: white; font-size: clamp(1.9rem, 4vw, 2.8rem); margin-bottom: 0.9rem; position: relative; z-index: 1; }
+        .cta-inner p { color: rgba(255,255,255,0.9); font-size: 1.15rem; margin-bottom: 2rem; position: relative; z-index: 1; }
+        .cta-inner .btn { position: relative; z-index: 1; }
+
+        /* ---------- Footer ---------- */
+        .footer {
+            background: var(--ink);
+            color: rgba(255,255,255,0.7);
+            padding: 3.5rem 0 1.8rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .footer .logo { color: white; margin-bottom: 0.9rem; }
+        .footer-brand p { font-size: 0.92rem; max-width: 17rem; }
+
+        .footer-col h4 {
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 1rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: rgba(255,255,255,0.65);
+            font-size: 0.93rem;
+            margin-bottom: 0.6rem;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover { color: var(--emerald-light); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.86rem;
+        }
+
+        .footer-bottom .legal { display: flex; gap: 1.5rem; }
+        .footer-bottom a:hover { color: var(--emerald-light); }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 900px) {
+            .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+            .hero-visual { max-width: 460px; margin: 0 auto; width: 100%; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps { grid-template-columns: repeat(2, 1fr); }
+            .roadmap-grid { grid-template-columns: 1fr; }
+            .highlight-inner { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 2rem; }
+            .footer-content { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .dev-inner { grid-template-columns: 1fr; text-align: center; gap: 1.5rem; padding: 2.5rem 2rem; }
+            .dev-avatar { margin: 0 auto; }
+            .dev-links { justify-content: center; }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links { display: none; }
+            .hero { padding: 3rem 0 3.5rem; }
+            .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+            .hero-cta { flex-direction: column; }
+            .hero-cta .btn { width: 100%; justify-content: center; }
+            .features-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .float-chip { display: none; }
+            .cta-inner, .highlight-inner { padding: 2.5rem 1.5rem; }
+        }
+    </style>
 </head>
 
 <body>
@@ -20,269 +826,358 @@
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                    <img src="logo.png" alt="PLATIFY Logo" style="height: 40px;">
+                    <div class="logo-mark">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 11h18M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M7 11v3M12 11v3M17 11v3M4 17h16l-1 4H5z"/>
+                        </svg>
+                    </div>
+                    PLATIFY
                 </div>
                 <div class="nav-links">
                     <a href="#features">Características</a>
-                    <a href="#pricing">Precios</a>
-                    <a href="#faq">FAQ</a>
-                    <a href="https://platify-smart.netlify.app" class="btn-primary">Abrir App</a>
+                    <a href="#how">Cómo funciona</a>
+                    <a href="#roadmap">Próximamente</a>
+                    <a href="https://platify-recipe-costing.pages.dev" class="btn btn-primary">Abrir App</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
-                    <div class="badge">✨ Nueva versión con IA</div>
-                    <h1>Costea tus Recetas en Segundos con Inteligencia Artificial</h1>
-                    <p class="hero-subtitle">La app profesional que usan chefs y restaurantes para calcular costos
-                        precisos, generar recetas automáticamente y aumentar su rentabilidad.</p>
+                    <div class="badge"><span class="dot"></span> Plataforma de gestión para comedores escolares</div>
+                    <h1>Costos precisos y <span class="accent">nutrición controlada</span>, en segundos.</h1>
+                    <p class="hero-subtitle">PLATIFY calcula el costo real por porción y el aporte nutricional de cada receta, aplicando factor de corrección automático. Pensada para la gestión profesional de comedores escolares municipales.</p>
                     <div class="hero-cta">
-                        <a href="https://platify-smart.netlify.app" class="btn-large btn-primary">
-                            Probar Gratis
+                        <a href="https://platify-recipe-costing.pages.dev" class="btn btn-large btn-primary">
+                            Ver la plataforma
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" />
+                                <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </a>
-                        <a href="https://platify-smart.netlify.app" class="btn-large btn-secondary">Ver Demo</a>
+                        <a href="#features" class="btn btn-large btn-secondary">Conocer más</a>
                     </div>
                     <div class="hero-stats">
                         <div class="stat">
-                            <div class="stat-number">271</div>
-                            <div class="stat-label">Ingredientes</div>
+                            <div class="stat-number">111<span>+</span></div>
+                            <div class="stat-label">Ingredientes cargados</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">32+</div>
-                            <div class="stat-label">Recetas IA</div>
+                            <div class="stat-number">100<span>%</span></div>
+                            <div class="stat-label">Costo por porción</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">Offline</div>
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Niveles educativos</div>
                         </div>
                     </div>
                 </div>
-                <div class="hero-image">
-                    <div class="app-mockup">
-                        <div class="mockup-glow"></div>
-                        <img src="app-mockup.png" alt="PLATIFY App Mockup"
-                            style="max-width: 100%; height: auto; position: relative; z-index: 1;">
+
+                <!-- Visual mockup -->
+                <div class="hero-visual">
+                    <div class="mock-glow"></div>
+                    <div class="float-chip chip-1">
+                        <div class="ic">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        FC automático
+                    </div>
+                    <div class="float-chip chip-2">
+                        <div class="ic">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+                        </div>
+                        Kcal por porción
+                    </div>
+                    <div class="mock-card">
+                        <div class="mock-head">
+                            <div class="mock-title">Bizcochuelo de banana</div>
+                            <div class="mock-tag">Ficha Técnica</div>
+                        </div>
+                        <div class="mock-row header">
+                            <span>Ingrediente</span>
+                            <span style="text-align:right">FC</span>
+                            <span style="text-align:right">Bruto</span>
+                            <span style="text-align:right">Costo</span>
+                        </div>
+                        <div class="mock-row">
+                            <span class="name">Harina leudante</span>
+                            <span class="num">1.00</span>
+                            <span class="num">8000g</span>
+                            <span class="cost">$9.600</span>
+                        </div>
+                        <div class="mock-row alt">
+                            <span class="name">Huevos</span>
+                            <span class="num">1.11</span>
+                            <span class="num">5217g</span>
+                            <span class="cost">$14.491</span>
+                        </div>
+                        <div class="mock-row">
+                            <span class="name">Banana</span>
+                            <span class="num">1.54</span>
+                            <span class="num">9240g</span>
+                            <span class="cost">$16.632</span>
+                        </div>
+                        <div class="mock-row alt">
+                            <span class="name">Azúcar</span>
+                            <span class="num">1.00</span>
+                            <span class="num">4000g</span>
+                            <span class="cost">$5.600</span>
+                        </div>
+                        <div class="mock-total">
+                            <div>
+                                <div class="label">Costo por porción</div>
+                                <div class="value">$118,40</div>
+                            </div>
+                            <div style="text-align:right">
+                                <div class="label">Calorías / porción</div>
+                                <div class="value">312 kcal</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
+    <!-- Features -->
     <section id="features" class="features">
         <div class="container">
             <div class="section-header">
-                <h2>Todo lo que necesitas para gestionar costos</h2>
-                <p>Herramientas profesionales diseñadas para chefs y restaurantes</p>
+                <span class="eyebrow">Características</span>
+                <h2>Todo lo que un comedor necesita para gestionar costos</h2>
+                <p>Herramientas profesionales de costeo y nutrición, simples de usar.</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>IA Integrada</h3>
-                    <p>Genera recetas automáticamente adaptadas a 8 tipos de dietas: Keto, Vegano, Sin Gluten y más.</p>
+                    <div class="feature-icon fi-1">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+                    <h3>Costo por porción exacto</h3>
+                    <p>Calcula el costo real de cada receta y lo divide por porción, listo para presupuestar el menú escolar.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Costos Precisos</h3>
-                    <p>Calcula automáticamente el factor de corrección y el peso bruto para costos exactos.</p>
+                    <div class="feature-icon fi-2">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="8" cy="6" r="2" fill="white"/><circle cx="16" cy="12" r="2" fill="white"/><circle cx="11" cy="18" r="2" fill="white"/></svg>
+                    </div>
+                    <h3>Factor de corrección automático</h3>
+                    <p>Convierte peso neto en bruto considerando cáscaras, mermas y desperdicios. Sin cálculos manuales.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Funciona Offline</h3>
-                    <p>PWA instalable que funciona sin internet. Tus datos siempre disponibles.</p>
+                    <div class="feature-icon fi-3">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
+                    </div>
+                    <h3>Análisis nutricional</h3>
+                    <p>Muestra calorías por porción de cada preparación, clave para cumplir con los requerimientos escolares.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Multi-idioma</h3>
-                    <p>Español, English, Français, Português. Tu negocio sin fronteras.</p>
+                    <div class="feature-icon fi-4">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+                    </div>
+                    <h3>Ficha técnica completa</h3>
+                    <p>Cada receta con ingredientes, cantidades, procedimiento y notas de seguridad alimentaria (HACCP).</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Análisis Detallado</h3>
-                    <p>Visualiza costos por porción, calorías, macros y márgenes de ganancia.</p>
+                    <div class="feature-icon fi-5">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.5 0 4.8 1 6.4 2.6"/><path d="M21 4v6h-6"/></svg>
+                    </div>
+                    <h3>Precios siempre al día</h3>
+                    <p>Actualizá el precio de un insumo y el costo de todas las recetas que lo usan se recalcula al instante.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Súper Rápido</h3>
-                    <p>Calcula costos en segundos. Ahorra 10+ horas semanales en cálculos manuales.</p>
+                    <div class="feature-icon fi-6">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M9 17V9l3 2 3-2v8"/></svg>
+                    </div>
+                    <h3>Modelos por nivel</h3>
+                    <p>Menús de referencia con aporte nutricional para Nivel Inicial, Primaria y Secundaria.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works -->
-    <section class="how-it-works">
+    <!-- How it works -->
+    <section id="how" class="how">
         <div class="container">
             <div class="section-header">
-                <h2>Cómo funciona</h2>
-                <p>Simple, rápido y profesional</p>
+                <span class="eyebrow">Cómo funciona</span>
+                <h2>De la receta al costo, en cuatro pasos</h2>
+                <p>Simple, rápido y profesional.</p>
             </div>
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Agrega tus ingredientes</h3>
-                    <p>Importa o crea tu base de datos de ingredientes con precios mayoristas</p>
+                    <h3>Cargá tus insumos</h3>
+                    <p>Lista de precios con cantidades y unidades de compra.</p>
                 </div>
-                <div class="step-arrow">→</div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Crea o genera recetas</h3>
-                    <p>Usa el asistente IA o crea tus recetas manualmente</p>
+                    <h3>Armá la receta</h3>
+                    <p>Agregá ingredientes con su peso neto; el FC hace el resto.</p>
                 </div>
-                <div class="step-arrow">→</div>
                 <div class="step">
                     <div class="step-number">3</div>
-                    <h3>Calcula costos</h3>
-                    <p>PLATIFY calcula automáticamente el costo total y por porción</p>
+                    <h3>Obtené el costo</h3>
+                    <p>PLATIFY calcula costo total, por porción y calorías.</p>
                 </div>
-                <div class="step-arrow">→</div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Define tu precio</h3>
-                    <p>Establece márgenes rentables basados en datos reales</p>
+                    <h3>Tomá decisiones</h3>
+                    <p>Presupuestá el menú con datos reales y trazables.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing">
+    <!-- Highlight -->
+    <section class="highlight">
+        <div class="container">
+            <div class="highlight-inner">
+                <div class="highlight-text">
+                    <span class="eyebrow">Por qué PLATIFY</span>
+                    <h2>Pensada para la gestión pública.</h2>
+                    <p>Una herramienta diseñada desde la cocina real, para que la administración de comedores escolares sea precisa, transparente y eficiente.</p>
+                    <a href="https://platify-recipe-costing.pages.dev" class="btn btn-large btn-white">Explorar la plataforma</a>
+                </div>
+                <div class="highlight-points">
+                    <div class="hp">
+                        <div class="hp-ic">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <div class="hp-text">
+                            <strong>Trazabilidad total</strong>
+                            <span>Cada costo se justifica con datos verificables</span>
+                        </div>
+                    </div>
+                    <div class="hp">
+                        <div class="hp-ic">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <div class="hp-text">
+                            <strong>Cumplimiento nutricional</strong>
+                            <span>Control de calorías por nivel educativo</span>
+                        </div>
+                    </div>
+                    <div class="hp">
+                        <div class="hp-ic">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <div class="hp-text">
+                            <strong>Acceso desde cualquier dispositivo</strong>
+                            <span>Funciona en computadora, tablet o celular</span>
+                        </div>
+                    </div>
+                    <div class="hp">
+                        <div class="hp-ic">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+                        </div>
+                        <div class="hp-text">
+                            <strong>Datos en la nube</strong>
+                            <span>Información segura y siempre disponible</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap -->
+    <section id="roadmap" class="roadmap">
         <div class="container">
             <div class="section-header">
-                <h2>Elige tu plan</h2>
-                <p>Empieza gratis, actualiza cuando estés listo</p>
+                <span class="eyebrow">Hoja de ruta</span>
+                <h2>Lo que viene en PLATIFY</h2>
+                <p>Funciones en desarrollo para potenciar aún más la gestión.</p>
             </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Gratis</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">0</span>
-                            <span class="period">/siempre</span>
-                        </div>
-                    </div>
-                    <ul class="features-list">
-                        <li>✅ Hasta 5 recetas</li>
-                        <li>✅ 50 ingredientes</li>
-                        <li>✅ Calculadora de costos</li>
-                        <li>✅ Multi-moneda</li>
-                        <li>❌ Sin IA</li>
-                        <li>❌ Sin exportar</li>
-                    </ul>
-                    <a href="https://platify-smart.netlify.app" class="btn-outline">Empezar Gratis</a>
+
+            <!-- Feature estrella -->
+            <div class="road-star">
+                <div class="road-star-glow"></div>
+                <div class="road-star-content">
+                    <span class="road-soon star">Función estrella</span>
+                    <div class="road-star-ic">🍳</div>
+                    <h3>Cocino con lo que tengo</h3>
+                    <p>El motor inteligente que propone recetas a partir de los ingredientes disponibles en stock, para optimizar recursos, reducir desperdicio y aprovechar al máximo cada compra.</p>
                 </div>
-                <div class="pricing-card featured">
-                    <div class="popular-badge">Más Popular</div>
-                    <div class="pricing-header">
-                        <h3>Profesional</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">29</span>
-                            <span class="period">/mes</span>
-                        </div>
-                        <div style="font-size: 0.875rem; color: var(--accent); margin-top: 0.5rem;">🎓 Estudiantes:
-                            $19/mes*</div>
-                    </div>
-                    <ul class="features-list">
-                        <li>✅ Recetas ilimitadas</li>
-                        <li>✅ 271 ingredientes</li>
-                        <li>✅ 50 generaciones IA/mes</li>
-                        <li>✅ Calculadora FC automática</li>
-                        <li>✅ Multi-moneda</li>
-                        <li>✅ Soporte email</li>
-                    </ul>
-                    <a href="#contact" class="btn-primary">Contactar</a>
+            </div>
+
+            <div class="roadmap-grid">
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">🥗</div>
+                    <h3>Recetas para dietas especiales con IA</h3>
+                    <p>Asistente que genera recetas adaptadas a celíacos, diabéticos y otras necesidades, respetando el aporte nutricional.</p>
                 </div>
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Premium</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">79</span>
-                            <span class="period">/mes</span>
-                        </div>
-                    </div>
-                    <ul class="features-list">
-                        <li>✅ Recetas + ingredientes ilimitados</li>
-                        <li>✅ Generaciones IA ilimitadas</li>
-                        <li>✅ Multi-usuario (hasta 3)</li>
-                        <li>✅ Exportar PDF/Excel*</li>
-                        <li>✅ Matriz BCG*</li>
-                        <li>✅ Estadísticas de venta*</li>
-                        <li>✅ Soporte prioritario 24h</li>
-                    </ul>
-                    <div style="font-size: 0.75rem; color: var(--text-light); margin-bottom: 1rem;">*Próximamente</div>
-                    <a href="#contact" class="btn-outline">Contactar</a>
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">🎯</div>
+                    <h3>Porciones por meta calórica</h3>
+                    <p>Cálculo automático de la cantidad de porciones según el valor calórico recomendado por ración.</p>
+                </div>
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">📦</div>
+                    <h3>Control de stock</h3>
+                    <p>Gestión y seguimiento del stock de utensilios y mercadería, con alertas y registro de movimientos.</p>
+                </div>
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">🤝</div>
+                    <h3>Gestión de proveedores</h3>
+                    <p>Control, seguimiento y comparación de proveedores para optimizar compras y precios.</p>
+                </div>
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">📄</div>
+                    <h3>Exportar fichas en PDF</h3>
+                    <p>Descargá la ficha técnica y la receta estándar lista para imprimir y archivar.</p>
+                </div>
+                <div class="road-card">
+                    <span class="road-soon">Próximamente</span>
+                    <div class="road-ic">📊</div>
+                    <h3>Reportes de gestión</h3>
+                    <p>Estadísticas de costos, consumo y nutrición para la toma de decisiones del comedor.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="faq">
+    <!-- Developer -->
+    <section class="developer">
         <div class="container">
-            <div class="section-header">
-                <h2>Preguntas Frecuentes</h2>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3>¿Necesito conexión a internet?</h3>
-                    <p>No. PLATIFY es una PWA que funciona completamente offline. Instálala en tu dispositivo y úsala
-                        sin internet.</p>
+            <div class="dev-inner">
+                <div class="dev-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L3 7v6c0 5 3.5 8.5 9 9 5.5-.5 9-4 9-9V7z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
                 </div>
-                <div class="faq-item">
-                    <h3>¿Cómo funciona la IA?</h3>
-                    <p>Nuestro asistente IA genera recetas basadas en tu inventario de ingredientes, adaptadas a 8 tipos
-                        de dietas y 4 momentos del día.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Puedo importar mis ingredientes?</h3>
-                    <p>Sí, puedes agregar ingredientes manualmente con sus precios mayoristas. Incluimos 271
-                        ingredientes pre-cargados.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿En qué monedas funciona?</h3>
-                    <p>PLATIFY soporta múltiples monedas: USD, EUR, ARS, MXN, CLP, COP y más.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Calcula el factor de corrección?</h3>
-                    <p>Sí, automáticamente. PLATIFY calcula el peso bruto considerando desperdicios, peladuras y mermas
-                        para costos precisos.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Hay soporte técnico?</h3>
-                    <p>Sí. Plan Profesional incluye soporte por email (48h), Premium tiene soporte prioritario (24h).
-                    </p>
-                </div>
-                <div class="faq-item">
-                    <h3>¿Hay descuento para estudiantes?</h3>
-                    <p>Sí! Estudiantes con certificado de alumno regular obtienen el plan Profesional a $19 USD/mes.
-                        Contacta para validar.</p>
+                <div class="dev-text">
+                    <span class="eyebrow">Desarrollo</span>
+                    <h2>Creado por Mercedes Recalde</h2>
+                    <p>Educadora gastronómica y desarrolladora web. PLATIFY nace del cruce entre la experiencia profesional en cocina y el desarrollo de software, para construir una herramienta pensada de verdad para quienes gestionan comedores escolares.</p>
+                    <div class="dev-links">
+                        <a href="mailto:mercedes.recalde@mvl.edu.ar" class="dev-link">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+                            mercedes.recalde@mvl.edu.ar
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- CTA -->
+    <section class="cta">
         <div class="container">
-            <div class="cta-content">
-                <h2>¿Listo para optimizar tus costos?</h2>
-                <p>Únete a chefs y restaurantes que ya confían en PLATIFY</p>
-                <a href="https://platify-smart.netlify.app" class="btn-large btn-white">
-                    Comenzar Gratis
+            <div class="cta-inner">
+                <h2>Gestión gastronómica, a la altura de lo público.</h2>
+                <p>Conocé cómo PLATIFY ordena costos y nutrición en un solo lugar.</p>
+                <a href="https://platify-recipe-costing.pages.dev" class="btn btn-large btn-white">
+                    Abrir la plataforma
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        <path d="M7 4L13 10L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </a>
             </div>
@@ -295,41 +1190,40 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="logo">
-                        <img src="logo.png" alt="PLATIFY Logo" style="height: 50px;">
+                        <div class="logo-mark">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M3 11h18M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M7 11v3M12 11v3M17 11v3M4 17h16l-1 4H5z"/>
+                            </svg>
+                        </div>
+                        PLATIFY
                     </div>
-                    <p>Costeo gastronómico profesional con inteligencia artificial</p>
+                    <p>Plataforma de costeo gastronómico y análisis nutricional para comedores escolares.</p>
                 </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Producto</h4>
-                        <a href="#features">Características</a>
-                        <a href="#pricing">Precios</a>
-                        <a href="https://platify-smart.netlify.app">Abrir App</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Recursos</h4>
-                        <a href="#faq">FAQ</a>
-                        <a href="#contact">Contacto</a>
-                        <a href="#docs">Documentación</a>
-                    </div>
-                    <div class="footer-column" id="contact">
-                        <h4>Contacto</h4>
-                        <a href="mailto:mercedes.recalde@mvl.edu.ar">Email</a>
-                        <a href="https://github.com/mercedesrecalde-webdesign">GitHub</a>
-                    </div>
+                <div class="footer-col">
+                    <h4>Plataforma</h4>
+                    <a href="#features">Características</a>
+                    <a href="#how">Cómo funciona</a>
+                    <a href="https://platify-recipe-costing.pages.dev">Abrir App</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Recursos</h4>
+                    <a href="#roadmap">Próximamente</a>
+                    <a href="#features">Funciones</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <a href="mailto:mercedes.recalde@mvl.edu.ar">mercedes.recalde@mvl.edu.ar</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 PLATIFY. Todos los derechos reservados.</p>
-                <div class="footer-legal">
-                    <a href="#privacy">Privacidad</a>
-                    <a href="#terms">Términos</a>
+                <p>&copy; 2026 PLATIFY · Desarrollado por Mercedes Recalde</p>
+                <div class="legal">
+                    <a href="#">Privacidad</a>
+                    <a href="#">Términos</a>
                 </div>
             </div>
         </div>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 
 </html>
